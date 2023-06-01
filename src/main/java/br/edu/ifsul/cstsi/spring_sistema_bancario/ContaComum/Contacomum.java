@@ -6,11 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 public class Contacomum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -56,4 +58,6 @@ public class Contacomum {
                 ", aniversarioConta=" + aniversarioConta +
                 '}';
     }
+
+
 }
