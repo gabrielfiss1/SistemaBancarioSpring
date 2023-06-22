@@ -1,63 +1,58 @@
 package br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum;
 
-import jakarta.persistence.*;
+import br.edu.ifsul.cstsi.spring_sistema_bancario.Movimento.Movimento;
+import br.edu.ifsul.cstsi.spring_sistema_bancario.PessoaConta.Pessoaconta;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Collection;
 
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+
+@Entity
+@Table(name="contas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-
 public class Contacomum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idConta", nullable = false)
+    @Column(name = "idConta")
     private Long idConta;
     @Basic
-    @Column(name = "numeroConta", nullable = true, length = 250)
+    @Column(name = "numeroConta")
     private String numeroConta;
     @Basic
-    @Column(name = "aberturaConta", nullable = true)
+    @Column(name = "aberturaConta")
     private LocalDate aberturaConta;
     @Basic
-    @Column(name = "fechamentoConta", nullable = true)
+    @Column(name = "fechamentoConta")
     private LocalDate fechamentoConta;
     @Basic
-    @Column(name = "situacaoConta", nullable = true)
+    @Column(name = "situacaoConta")
     private Integer situacaoConta;
     @Basic
-    @Column(name = "senhaConta", nullable = true)
+    @Column(name = "senhaConta")
     private Integer senhaConta;
     @Basic
-    @Column(name = "saldoConta", nullable = true)
+    @Column(name = "saldoConta")
     private Integer saldoConta;
     @Basic
-    @Column(name = "limiteConta", nullable = true, precision = 0)
+    @Column(name = "limiteConta")
     private Double limiteConta;
     @Basic
-    @Column(name = "aniversarioConta", nullable = true)
+    @Column(name = "aniversarioConta")
     private LocalDate aniversarioConta;
-
-
-    @Override
-    public String   toString() {
-        return "Contacomum{" +
-                "idConta=" + idConta +
-                ", numeroConta='" + numeroConta + '\'' +
-                ", aberturaConta=" + aberturaConta +
-                ", fechamentoConta=" + fechamentoConta +
-                ", situacaoConta=" + situacaoConta +
-                ", senhaConta=" + senhaConta +
-                ", saldoConta=" + saldoConta +
-                ", limiteConta=" + limiteConta +
-                ", aniversarioConta=" + aniversarioConta +
-                '}';
-    }
+    @OneToMany(mappedBy = "contacomum")
+    private Collection<Movimento> movimentos;
+    @OneToMany(mappedBy = "idConta")
+    private Collection<Pessoaconta> pessoacontasByIdConta;
 
 
 }
