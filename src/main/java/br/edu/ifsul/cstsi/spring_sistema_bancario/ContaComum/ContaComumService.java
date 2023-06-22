@@ -47,8 +47,6 @@ public class ContaComumService {
                 Contacomum db = optional.get();
                 // Copiar as propriedades
                 db.setNumeroConta(contacomum.getNumeroConta());
-
-                // Atualiza o produto
                 rep.save(db);
 
                 return db;

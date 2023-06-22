@@ -17,16 +17,16 @@ public class Contacomum {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idConta", nullable = false)
-    private int idConta;
+    private Long idConta;
     @Basic
     @Column(name = "numeroConta", nullable = true, length = 250)
     private String numeroConta;
     @Basic
     @Column(name = "aberturaConta", nullable = true)
-    private Date aberturaConta;
+    private LocalDate aberturaConta;
     @Basic
     @Column(name = "fechamentoConta", nullable = true)
-    private Date fechamentoConta;
+    private LocalDate fechamentoConta;
     @Basic
     @Column(name = "situacaoConta", nullable = true)
     private Integer situacaoConta;
@@ -41,7 +41,7 @@ public class Contacomum {
     private Double limiteConta;
     @Basic
     @Column(name = "aniversarioConta", nullable = true)
-    private Date aniversarioConta;
+    private LocalDate aniversarioConta;
 
 
     @Override

@@ -10,7 +10,7 @@ public class Movimento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idMovimento", nullable = false)
-    private int idMovimento;
+    private Integer idMovimento;
     @Basic
     @Column(name = "tipoMovimento", nullable = true)
     private Integer tipoMovimento;
