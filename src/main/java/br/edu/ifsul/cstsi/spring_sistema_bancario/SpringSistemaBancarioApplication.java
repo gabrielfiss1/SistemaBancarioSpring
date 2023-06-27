@@ -1,6 +1,7 @@
 package br.edu.ifsul.cstsi.spring_sistema_bancario;
 
 import br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum.ContaComumController;
+import br.edu.ifsul.cstsi.spring_sistema_bancario.Pessoa.PessoaController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +11,7 @@ public class SpringSistemaBancarioApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(SpringSistemaBancarioApplication.class, args);
-        ContaComumController.main(null);
+        HomeController.main();
     }
 
 }

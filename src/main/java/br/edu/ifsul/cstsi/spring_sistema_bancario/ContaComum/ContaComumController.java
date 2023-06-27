@@ -5,12 +5,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+
+
+import br.edu.ifsul.cstsi.spring_sistema_bancario.Pessoa.PessoaService;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class ContaComumController {
     private static final Scanner input = new Scanner(System.in);
     private static ContaComumService ContaComumService;
+    private static PessoaService PessoaService;
 
     //Injeção de dependência (Não utilizou @Autowired porque o Springboot não injeta a dependência. Afinal, estamos adaptando um framework web para modo texto)
     public ContaComumController(ContaComumService ContaComumService) {
@@ -28,7 +32,7 @@ public class ContaComumController {
                         1. Inserir nova Conta
                         2. Atualizar uma Conta
                         3. Excluir uma conta
-                        4. Listar todos as Contas
+                        5. Listar todos as Contas
                         6. Buscar contas pelo código
                         7. Buscar contas pelo nome
                         8. Buscar contas pela situação
@@ -38,9 +42,8 @@ public class ContaComumController {
             switch (opcao) {
                 case 1 -> inserir();
                 case 2 -> atualizar();
-               // case 3 -> excluir();
-               // case 4 -> ativar();
-               // case 5 -> selectclientes();
+                case 3 -> excluir();
+                case 4 -> selectclientes();
                // case 6 -> selectclientesById();
                // case 7 -> selectclientesByNome();
                // case 8 -> selectClientesBySituacao();
@@ -60,6 +63,7 @@ public class ContaComumController {
         System.out.print("\nDigite a data abertura da conta: ");
         LocalDate dataAbertura = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         cc1.setAberturaConta(dataAbertura);
+        System.out.print("\nDigite a data fechamento da conta: ");
         LocalDate dataFechamento = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         cc1.setFechamentoConta(dataFechamento);
         cc1.setSituacaoConta(1);
@@ -87,12 +91,11 @@ public class ContaComumController {
             if (codigo == 0) {
                 opcao = 0;
             } else {
-                //contacomum = ContaService.getClienteById(codigo);
                 contacomum = ContaComumService.getContaComumById(codigo);
                 if (contacomum == null) {
                     System.out.println("Código inválido.");
                 } else {
-                    System.out.println("Nome: " + contacomum.getNumeroConta());
+                    System.out.println("Numero: " + contacomum.getNumeroConta());
                     System.out.print("Alterar? (0-sim/1-não) ");
                     if(input.nextInt() == 0){
                         input.nextLine();
@@ -117,6 +120,40 @@ public class ContaComumController {
                 }
             }
         } while (opcao != 0);
+    }
+    private static void excluir() {
+        System.out.println("\n++++++ Excluir uma conta ++++++");
+        Contacomum contacomum;
+        int opcao = 0;
+        do {
+            System.out.print("\nDigite o código da conta (Zero p/sair): ");
+            Long codigo = input.nextLong();
+            input.nextLine();
+            if (codigo == 0) {
+                opcao = 0;
+            } else if (codigo > 0) {
+                //aluno = AlunoService.getAlunoById(codigo);
+                contacomum = ContaComumService.getContaComumById(codigo);
+                if (contacomum == null) {
+                    System.out.println("Código inválido.");
+                } else {
+                    System.out.println(contacomum);
+                    System.out.print("Excluir esta conta? (0-sim/1-não) ");
+                    if (input.nextInt() == 0) {
+                        input.nextLine();
+                        ContaComumService.delete(contacomum.getIdConta());
+                        System.out.println("Conta excluída:" + contacomum);
+                    }
+
+                }
+            } else {
+                System.out.println("Digite um código válido!!!");
+            }
+        } while (opcao != 0);
+    }
+
+    private static void selectclientes() {
+        System.out.println("\nLista todas as contas no banco de dados:\n" + ContaComumService.getContaComum());
     }
 
 }

@@ -1,7 +1,7 @@
 package br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum;
 
 import br.edu.ifsul.cstsi.spring_sistema_bancario.Movimento.Movimento;
-import br.edu.ifsul.cstsi.spring_sistema_bancario.PessoaConta.Pessoaconta;
+import br.edu.ifsul.cstsi.spring_sistema_bancario.Pessoa.Pessoa;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,38 +21,24 @@ import org.springframework.cglib.core.Local;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Contacomum {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idConta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idConta;
-    @Basic
-    @Column(name = "numeroConta")
     private String numeroConta;
-    @Basic
-    @Column(name = "aberturaConta")
     private LocalDate aberturaConta;
-    @Basic
-    @Column(name = "fechamentoConta")
     private LocalDate fechamentoConta;
-    @Basic
-    @Column(name = "situacaoConta")
     private Integer situacaoConta;
-    @Basic
-    @Column(name = "senhaConta")
     private Integer senhaConta;
-    @Basic
-    @Column(name = "saldoConta")
     private Integer saldoConta;
-    @Basic
-    @Column(name = "limiteConta")
     private Double limiteConta;
-    @Basic
-    @Column(name = "aniversarioConta")
     private LocalDate aniversarioConta;
-    @OneToMany(mappedBy = "contacomum")
+    @Transient
     private Collection<Movimento> movimentos;
-    @OneToMany(mappedBy = "idConta")
-    private Collection<Pessoaconta> pessoacontasByIdConta;
+    @ManyToMany(fetch = FetchType.EAGER , mappedBy = "contas")
+    private Collection<Pessoa> pessoas;
 
 
 }
+
+
+

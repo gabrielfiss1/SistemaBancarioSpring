@@ -18,27 +18,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movimento {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idMovimento")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMovimento;
-    @Basic
-    @Column(name = "tipoMovimento")
     private Integer tipoMovimento;
-    @Basic
-    @Column(name = "dataMovimento")
     private LocalDate dataMovimento;
-    @Basic
-    @Column(name = "horaMovimento")
     private Time horaMovimento;
-    @Basic
-    @Column(name = "valorMovimento")
     private Double valorMovimento;
-    @Basic
-    @Column(name = "idConta")
-    private Integer idConta;
     @ManyToOne
-    @JoinColumn(name = "idConta", referencedColumnName = "idConta")
+    @JoinColumn(name = "id_contacomum", referencedColumnName = "idConta")
     private Contacomum contacomum;
 
 
