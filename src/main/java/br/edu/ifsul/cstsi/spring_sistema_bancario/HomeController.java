@@ -1,6 +1,7 @@
 package br.edu.ifsul.cstsi.spring_sistema_bancario;
 
 import br.edu.ifsul.cstsi.spring_sistema_bancario.Movimento.Movimento;
+import br.edu.ifsul.cstsi.spring_sistema_bancario.Movimento.MovimentoController;
 import br.edu.ifsul.cstsi.spring_sistema_bancario.Pessoa.PessoaController;
 import br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum.ContaComumController;
 import java.util.Scanner;
@@ -27,7 +28,7 @@ public class HomeController {
             switch (opcao) {
                 case 1 -> PessoaController.main(null);
                 case 2 -> ContaComumController.main(null);
-                //case 3 -> MovimentoController.main(null);
+                case 3 -> MovimentoController.main(null);
 
                 default -> {
                     if (opcao != 0) System.out.println("Opção inválida.");

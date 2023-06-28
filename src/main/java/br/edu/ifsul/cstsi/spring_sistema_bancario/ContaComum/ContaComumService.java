@@ -47,6 +47,10 @@ public class ContaComumService {
                 Contacomum db = optional.get();
                 // Copiar as propriedades
                 db.setNumeroConta(contacomum.getNumeroConta());
+                db.setSenhaConta(contacomum.getSenhaConta());
+                db.setSaldoConta(contacomum.getSaldoConta());
+                db.setFechamentoConta(contacomum.getFechamentoConta());
+                db.setSituacaoConta(contacomum.getSituacaoConta());
                 rep.save(db);
 
                 return db;

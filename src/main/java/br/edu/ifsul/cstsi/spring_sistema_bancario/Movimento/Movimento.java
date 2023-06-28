@@ -29,5 +29,15 @@ public class Movimento {
     @JoinColumn(name = "id_contacomum", referencedColumnName = "idConta")
     private Contacomum contacomum;
 
-
+    @Override
+    public String toString() {
+        return "\nMovimento{" +
+                "idMovimento=" + idMovimento +
+                ", tipoMovimento=" + tipoMovimento +
+                ", dataMovimento=" + dataMovimento +
+                ", horaMovimento=" + horaMovimento +
+                ", valorMovimento=" + valorMovimento +
+                ", contacomum=" + contacomum +
+                '}';
+    }
 }
