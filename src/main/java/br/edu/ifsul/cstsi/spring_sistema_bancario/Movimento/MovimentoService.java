@@ -27,14 +27,6 @@ public class MovimentoService  {
         return null;
     }
 
-   // public Movimento getMovimentoByData(Long id){
-    //    Optional<Movimento> optional = rep.findById(id);
-    //    if(optional.isPresent()) {
-   //         return optional.get();
-   //     }
-       //return null;
-   // }
-
     public Movimento insert(Movimento movimento) {
         Assert.isNull(movimento.getIdMovimento(),"Não foi possível inserir o registro");
         return rep.save(movimento);
@@ -49,7 +41,7 @@ public class MovimentoService  {
             Movimento db = optional.get();
             db.setDataMovimento(movimento.getDataMovimento());
             db.setValorMovimento(movimento.getValorMovimento());
-            //db.setIdadePessoa(pessoa.getIdadePessoa());
+            db.setHoraMovimento(movimento.getHoraMovimento());
             rep.save(db);
 
             return db;

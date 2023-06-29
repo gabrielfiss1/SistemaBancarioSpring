@@ -2,10 +2,14 @@ package br.edu.ifsul.cstsi.spring_sistema_bancario.Movimento;
 
 import br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum.ContaComumService;
 import br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum.Contacomum;
+import br.edu.ifsul.cstsi.spring_sistema_bancario.Pessoa.Pessoa;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -34,8 +38,6 @@ public class MovimentoController {
                             3. Excluir um movimento
                             4. Listar todos os movimentos
                             5. Buscar movimento pelo código
-                            
-
                             Opção (Zero p/sair):\s""");
             opcao = input.nextInt();
             input.nextLine();
@@ -44,10 +46,7 @@ public class MovimentoController {
                 case 2 -> atualizar();
                 case 3 -> excluir();
                 case 4 -> selectMovimentos();
-               // case 5 -> selectmatriculasByCodMatricula();
-
-
-
+                case 5 -> selectMovimentosById();
                 default -> {
                     if (opcao != 0) System.out.println("Opção inválida.");
                 }
@@ -63,17 +62,23 @@ public class MovimentoController {
         System.out.println("Digite a data do movimento: ");
         LocalDate data = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         movimento.setDataMovimento(data);
-
-        //System.out.println("Digite a forma de pagamento: ");
-       // matricula.setForma_pagto(input.nextLine());
-
+        System.out.println("Digite a hora do movimento: ");
+        LocalTime hora = LocalTime.parse(input.nextLine(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        movimento.setHoraMovimento(hora);
+        System.out.println("Digite o valor do movimento: ");
+        movimento.setValorMovimento(input.nextDouble());
+        //
         System.out.println("Contas cadastradas: " + contaComumService.getContaComum());
         System.out.println("Digite o id da conta para o movimento: ");
         Contacomum contacomum = contaComumService.getContaComumById(input.nextLong());
-        movimento.setContacomum(contacomum);
+        if (contacomum == null) {
+            System.out.println("Código inválido.");
+        } else {
+            movimento.setContacomum(contacomum);
+            System.out.println("Movimento salvo com sucesso: " + movimentoService.insert(movimento));
+        }
 
 
-        System.out.println("Movimento salvo com sucesso: " + movimentoService.insert(movimento));
     }
     private static void atualizar() {
         System.out.println("\n++++++ Alterar um movimento ++++++");
@@ -90,21 +95,29 @@ public class MovimentoController {
                 if (movimento == null) {
                     System.out.println("Código inválido.");
                 } else {
-                    System.out.println("Numero: " + movimento.getIdMovimento());
+                    System.out.println("Numero movimento: " + movimento.getIdMovimento());
                     System.out.print("Alterar? (0-sim/1-não) ");
                     if(input.nextInt() == 0){
                         input.nextLine();
                         System.out.println("Digite o novo valor do movimento: ");
                         movimento.setValorMovimento(input.nextDouble());
                     }
-                    //System.out.println("Sobrenome: " + cliente.getSobrenome());
-                    //System.out.print("Alterar? (0-sim/1-não) ");
-                    //if(input.nextInt() == 0){
-                    //  input.nextLine();
-                    //System.out.print("Digite o novo sobrenome do cliente: ");
-                    //  cliente.setSobrenome(input.nextLine());
-                    //}
-                    //cliente.setSituacao(true);
+                    System.out.println("Data: " + movimento.getDataMovimento());
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite a nova data: ");
+                        LocalDate data = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        movimento.setDataMovimento(data);
+                    }
+                    System.out.println("Hora: " + movimento.getHoraMovimento());
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.println("Digite a hora do movimento: ");
+                        LocalTime hora = LocalTime.parse(input.nextLine(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+                        movimento.setHoraMovimento(hora);
+                    }
                     if(movimentoService.update(movimento) != null) {
                         System.out.println("movimento atualizado com sucesso. " + movimentoService.getMovimentoById(movimento.getIdMovimento()));
                     } else {
@@ -117,7 +130,7 @@ public class MovimentoController {
         } while (opcao != 0);
     }
     private static void excluir(){
-        System.out.println("\n+++++ Excluir uma matricula ++++++");
+        System.out.println("\n+++++ Excluir um movimento ++++++");
         Movimento movimento;
         int opcao = 0;
         do {
@@ -146,6 +159,17 @@ public class MovimentoController {
     }
     private static void selectMovimentos() {
         System.out.println("\nLista todos os movimentos no banco de dados:\n" + movimentoService.getMovimentos());
+    }
+
+    private static void selectMovimentosById() {
+        System.out.print("\nDigite o código do movimento: ");
+        Movimento movimento = movimentoService.getMovimentoById(input.nextLong());
+        input.nextLine();
+        if (movimento != null) {
+            System.out.println(movimento);
+        } else {
+            System.out.println("Código não localizado.");
+        }
     }
 }
 

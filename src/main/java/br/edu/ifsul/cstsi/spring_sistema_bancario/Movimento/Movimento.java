@@ -10,6 +10,8 @@ import jakarta.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 
@@ -23,7 +25,7 @@ public class Movimento {
     private Long idMovimento;
     private Integer tipoMovimento;
     private LocalDate dataMovimento;
-    private Time horaMovimento;
+    private LocalTime horaMovimento;
     private Double valorMovimento;
     @ManyToOne
     @JoinColumn(name = "id_contacomum", referencedColumnName = "idConta")

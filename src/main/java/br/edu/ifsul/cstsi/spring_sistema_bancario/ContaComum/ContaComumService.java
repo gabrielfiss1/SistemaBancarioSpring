@@ -24,8 +24,12 @@ public class ContaComumService {
             }
             return null;
         }
+        public List<Contacomum> getContaComumByNumeroConta(String numeroConta) {
+            return new ArrayList<>(rep.findByNumeroConta(numeroConta));
 
-        public Contacomum getClienteByIdSituacaoTrue(Long id){
+        }
+
+        public Contacomum getContaByIdSituacaoTrue(Long id){
             Optional<Contacomum> optional = rep.findById(id);
             if(optional.isPresent()) {
                 return optional.get();

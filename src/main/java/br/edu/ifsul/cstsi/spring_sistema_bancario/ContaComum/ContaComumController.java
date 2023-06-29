@@ -45,8 +45,7 @@ public class ContaComumController {
                 case 3 -> excluir();
                 case 4 -> selectcontas();
                 case 5 -> selectContacomumById();
-               // case 7 -> selectclientesByNome();
-               // case 8 -> selectClientesBySituacao();
+                case 6 -> selectContaByNumero();
                 default -> {
                     if (opcao != 0) System.out.println("Opção inválida.");
                 }
@@ -63,7 +62,6 @@ public class ContaComumController {
         System.out.print("\nDigite a data abertura da conta: ");
         LocalDate dataAbertura = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         cc1.setAberturaConta(dataAbertura);
-        //LocalDate dataFechamento = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         cc1.setFechamentoConta(null);
         cc1.setSituacaoConta(1);
         System.out.print("\nDigite a senha da conta: ");
@@ -171,6 +169,16 @@ public class ContaComumController {
         System.out.print("\nDigite o código da conta: ");
         Contacomum contacomum = ContaComumService.getContaComumById(input.nextLong());
         input.nextLine();
+        if (contacomum != null) {
+            System.out.println(contacomum);
+        } else {
+            System.out.println("Código não localizado.");
+        }
+    }
+    private static void selectContaByNumero() {
+        System.out.print("\nDigite o número da conta: ");
+        String numero = input.next();
+        List<Contacomum> contacomum = ContaComumService.getContaComumByNumeroConta(numero);
         if (contacomum != null) {
             System.out.println(contacomum);
         } else {

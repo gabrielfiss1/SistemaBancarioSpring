@@ -1,6 +1,7 @@
 package br.edu.ifsul.cstsi.spring_sistema_bancario.Pessoa;
 
 
+import java.util.List;
 import java.util.Scanner;
 
 import br.edu.ifsul.cstsi.spring_sistema_bancario.ContaComum.Contacomum;
@@ -41,8 +42,7 @@ public class PessoaController {
                 case 3 -> excluir();
                 case 4 -> selectPessoas();
                 case 5 -> selectPessoasById();
-                // case 7 -> selectclientesByNome();
-                // case 8 -> selectClientesBySituacao();
+                case 6 -> selectPessoasByNome();
                 default -> {
                     if (opcao != 0) System.out.println("Opção inválida.");
                 }
@@ -56,28 +56,24 @@ public class PessoaController {
         System.out.println("\n++++++ Cadastro de nova pessoa ++++++");
         System.out.print("Digite o seu nome: ");
         p1.setNomePessoa(input.nextLine());
-       System.out.print("\nDigite o endereco: ");
+       System.out.print("\nDigite o seu endereco: ");
        p1.setEnderecoPessoa(input.nextLine());
-       System.out.print("\nDigite o cep: ");
-       p1.setCepPessoa("dsadasdasdsaads1");
-       p1.setTelefonePessoa("98432433");
-       p1.setRendaPessoa(2000.20);
+       System.out.print("\nDigite o seu cep: ");
+       p1.setCepPessoa(input.nextLine());
+       System.out.print("\nDigite o seu telefone: ");
+       p1.setTelefonePessoa(input.nextLine());
+       System.out.print("\nDigite a sua renda: ");
+       p1.setRendaPessoa(input.nextDouble());
+       System.out.print("\nDigite o seu rg: ");
+       p1.setRgPessoa(input.nextLine());
+       System.out.print("\nDigite a sua idade: ");
+       p1.setIdadePessoa(input.nextInt());
+       System.out.print("\nDigite o seu cnpj: ");
+       p1.setCnpjPessoa(input.nextLine());
+       System.out.print("\nDigite o seu cpf: ");
+       p1.setCpfPessoa(input.nextLine());
        p1.setSituacaoPessoa(1);
-       p1.setCpfPessoa("0522-333-222");
-       p1.setRgPessoa("33333");
-       p1.setIdadePessoa(30);
-       p1.setCnpjPessoa("4322222");
-      //  LocalDate dataFechamento = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-      //  cc1.setFechamentoConta(dataFechamento);
-     //   cc1.setSituacaoConta(1);
-      //  System.out.print("\nDigite a senha da conta: ");
-      //  cc1.setSenhaConta(Integer.valueOf(input.nextLine()));
-      //  System.out.print("\nsaldo: ");
-      //  cc1.setSaldoConta(Integer.valueOf(input.nextLine()));
-      //  cc1.setLimiteConta(1000.00);
-      //  System.out.print("\nanive: ");
-      //  LocalDate aniversario = LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-       // cc1.setAniversarioConta(aniversario);
+
         System.out.println("pessoa cadastrada:" + PessoaService.insert(p1) );
         System.out.println(p1);
     }
@@ -109,6 +105,55 @@ public class PessoaController {
                       input.nextLine();
                     System.out.print("Digite a nova idade: ");
                       pessoa.setIdadePessoa(input.nextInt());
+                    }
+                    System.out.println("endereço: " + pessoa.getEnderecoPessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite um novo endereço: ");
+                        pessoa.setEnderecoPessoa(input.nextLine());
+                    }
+                    System.out.println("cep: " + pessoa.getCepPessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite seu novo cep: ");
+                        pessoa.setCepPessoa(input.nextLine());
+                    }
+                    System.out.println("telefone: " + pessoa.getTelefonePessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite o novo telefone: ");
+                        pessoa.setTelefonePessoa(input.nextLine());
+                    }
+                    System.out.println("renda: " + pessoa.getRendaPessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite a nova renda: ");
+                        pessoa.setRendaPessoa(input.nextDouble());
+                    }
+                    System.out.println("CPF: " + pessoa.getCpfPessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite o novo cpf: ");
+                        pessoa.setCpfPessoa(input.nextLine());
+                    }
+                    System.out.println("RG: " + pessoa.getRgPessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite o novo rg: ");
+                        pessoa.setRgPessoa(input.nextLine());
+                    }
+                    System.out.println("CNPJ: " + pessoa.getCnpjPessoa() );
+                    System.out.print("Alterar? (0-sim/1-não) ");
+                    if(input.nextInt() == 0){
+                        input.nextLine();
+                        System.out.print("Digite o novo cnpj: ");
+                        pessoa.setCnpjPessoa(input.nextLine());
                     }
                     if(PessoaService.update(pessoa) != null) {
                         System.out.println("Pessoa atualizada com sucesso. " + PessoaService.getPessoaById(pessoa.getIdPessoa()));
@@ -164,5 +209,15 @@ public class PessoaController {
             System.out.println("Código não localizado.");
         }
     }
-
+    private static void selectPessoasByNome() {
+        System.out.print("Digite o nome da pessoa: ");
+        String nomePessoa = input.next();
+        System.out.println("Chave de pesquisa: " + nomePessoa);
+        List<Pessoa> pessoas = PessoaService.getPessoaByName(nomePessoa);
+        if (pessoas.isEmpty()) {
+            System.out.println("Não há registros correspondentes para: " + nomePessoa);
+        } else {
+            System.out.println(pessoas);
+        }
+    }
 }
